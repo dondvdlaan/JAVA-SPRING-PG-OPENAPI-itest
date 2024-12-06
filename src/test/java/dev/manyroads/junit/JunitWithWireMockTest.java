@@ -1,8 +1,11 @@
 package dev.manyroads.junit;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
@@ -30,19 +34,28 @@ public class JunitWithWireMockTest {
     }
 
     public void setupStub() {
-        wireMockServer.stubFor(get(urlEqualTo("/an/endpoint"))
+        wireMockServer.stubFor(get(urlEqualTo("/vehicles"))
                 .willReturn(aResponse().withHeader("Content-Type", "application/json")
                         .withStatus(200)
-                        .withBody("json/glossary.json")));
+                        .withBody("bulldozer")));
     }
 
     @Test
-    public void testStatusCodePositive() {
-        given().
-                when().
-                get("http://localhost:7090/an/endpoint").
-                then().
-                assertThat().statusCode(200);
+    public void startCecomHappyFlow() {
+        // prepare
+        RestAssured.baseURI = "http://localhost:8080/v1";
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("customerNr", 121212);
+        jsonObject.put("matterNr", "9781449325862");
+        request.body(jsonObject.toJSONString());
+
+        // Activate
+        Response response = request.post("/matters");
+
+        // Verify
+        assertEquals(200,response.getStatusCode());
     }
 
     @Test

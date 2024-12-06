@@ -1,6 +1,5 @@
 package dev.manyroads;
 
-import org.springframework.boot.SpringApplication;
 
 public class RunWireMockServer {
 

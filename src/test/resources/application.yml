@@ -1,1 +1,13 @@
-port: 8081
+spring:
+  application:
+    name: Decom-Admin
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    discovery:
+      client:
+        simple:
+          instances:
+            Decom-Admin:
+              uri: http://localhost:7090
