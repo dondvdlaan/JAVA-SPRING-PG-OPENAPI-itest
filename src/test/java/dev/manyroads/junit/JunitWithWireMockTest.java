@@ -1,79 +1,64 @@
 package dev.manyroads.junit;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
-import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.HttpResponse;
-import org.apache.hc.core5.http.ParseException;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Scanner;
-
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.ok;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static java.nio.file.Paths.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 public class JunitWithWireMockTest {
 
-    CloseableHttpClient httpClient;
     WireMockServer wireMockServer;
 
     @BeforeEach
-    void setUp() {
-        httpClient = HttpClients.createDefault();
-        wireMockServer = new WireMockServer(8090);
-        wireMockServer.stop();
+    public void setup () {
+        wireMockServer = new WireMockServer(7090);
         wireMockServer.start();
         setupStub();
     }
 
+    @AfterEach
+    public void teardown () {
+        wireMockServer.stop();
+    }
+
     public void setupStub() {
-        // AdminClient
-        wireMockServer.stubFor(get(urlEqualTo("/vehicles"))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
+        wireMockServer.stubFor(get(urlEqualTo("/an/endpoint"))
+                .willReturn(aResponse().withHeader("Content-Type", "application/json")
                         .withStatus(200)
-                        .withBody("dirtbike")
-                )
-        );
+                        .withBody("json/glossary.json")));
     }
 
     @Test
-    void startDecomHappyFlow() throws IOException, ParseException {
-        // Prepare
-
-
-        // When
-        HttpGet request = new HttpGet("http://localhost:8080/test");
-        CloseableHttpResponse response = httpClient.execute(request);
-        HttpEntity entity = response.getEntity();
-        String result = EntityUtils.toString(entity);
-
-        // Verify
-        assertEquals(result, "Holita");
+    public void testStatusCodePositive() {
+        given().
+                when().
+                get("http://localhost:7090/an/endpoint").
+                then().
+                assertThat().statusCode(200);
     }
 
-    @AfterEach
-    void simmerDown() {
+    @Test
+    public void testStatusCodeNegative() {
+        given().
+                when().
+                get("http://localhost:7090/another/endpoint").
+                then().
+                assertThat().statusCode(404);
     }
 
+    @Test
+    public void testResponseContents() {
+        Response response =  given().when().get("http://localhost:7090/an/endpoint");
+        //String title = response.jsonPath().get("glossary.title");
+        System.out.println(response.asString());
+        assertEquals("json/glossary.json", response.asString());
+    }
 }

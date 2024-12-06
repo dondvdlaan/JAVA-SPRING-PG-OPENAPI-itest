@@ -13,7 +13,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static io.restassured.RestAssured.given;
 
-@com.github.tomakehurst.wiremock.junit5.WireMockTest(httpPort = 9876)
+//@com.github.tomakehurst.wiremock.junit5.WireMockTest(httpPort = 9876)
 public class WireMockTest {
 
     private RequestSpecification requestSpec;
