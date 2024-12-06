@@ -1,4 +1,4 @@
-package dev.manyroads;
+package dev.manyroads.steps;
 
 import io.cucumber.java.en.*;
 
@@ -20,8 +20,7 @@ public class StepDefinitions {
 
     @Then("Bericht terugontvangen")
     public void theScenarioPasses() {
-        assertEquals("http://localhost/8080/testTLandcruiser2804" +
-                "",this.testURL);
+        assertEquals("http://localhost/8080/test",this.testURL);
     }
 
 }
