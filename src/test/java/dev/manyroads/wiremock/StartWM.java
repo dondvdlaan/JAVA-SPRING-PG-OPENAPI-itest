@@ -14,8 +14,9 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 public class StartWM {
 
     static int port = 7090 ;
-    WireMockServer wireMockServer;
+    static WireMockServer wireMockServer= new WireMockServer(options().port(port));
 
+    /*
     public StartWM() {
         this.wireMockServer =  new WireMockServer(options().port(port));;
     }
@@ -31,4 +32,6 @@ public class StartWM {
         System.out.printf("wireMockServer started on port %d!%n", port);
 
     }
+
+     */
 }

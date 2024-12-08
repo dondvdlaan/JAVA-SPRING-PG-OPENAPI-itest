@@ -9,7 +9,7 @@ public class StartWireMockServer {
 
     public static void main(String[] args) {
         //SpringApplication.run(StartWireMockServer.class, args);
-        StartWM.run();
+        //StartWM.run();
     }
 
 }
