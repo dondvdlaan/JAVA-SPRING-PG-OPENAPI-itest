@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Decom-Admin
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    discovery:
+      client:
+        simple:
+          instances:
+            Decom-Admin[0]:
+              uri: http://localhost:8080
