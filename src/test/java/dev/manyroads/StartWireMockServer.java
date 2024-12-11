@@ -1,15 +1,19 @@
 package dev.manyroads;
 
-import dev.manyroads.wiremock.StartWM;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import dev.manyroads.config.WMConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class StartWireMockServer {
 
     public static void main(String[] args) {
-        //SpringApplication.run(StartWireMockServer.class, args);
-        //StartWM.run();
+        ApplicationContext context = SpringApplication.run(StartWireMockServer.class, args);
+        WireMockServer wireMockServer = context.getBean(WireMockServer.class);
+        wireMockServer.start();
+        System.out.printf("WM started at port %d\n", 7090);
     }
 
 }
