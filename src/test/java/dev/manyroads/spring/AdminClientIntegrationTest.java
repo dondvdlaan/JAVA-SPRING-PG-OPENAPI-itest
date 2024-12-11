@@ -1,7 +1,7 @@
 package dev.manyroads.spring;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import dev.manyroads.config.WireMockConfig;
+import dev.manyroads.config.WMConfig;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @EnableConfigurationProperties
 @EnableFeignClients
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { WireMockConfig.class })
+@ContextConfiguration(classes = { WMConfig.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdminClientIntegrationTest {
 
