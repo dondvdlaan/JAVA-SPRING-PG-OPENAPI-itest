@@ -1,16 +1,10 @@
 package dev.manyroads.steps;
 
-import dev.manyroads.model.VehicleEnum;
-
-import dev.manyroads.wiremock.StartWM;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
@@ -27,6 +21,5 @@ public class WireMockSteps {
                 .willReturn(aResponse().withHeader("Content-Type", "application/json")
                         .withStatus(200)
                         .withBody(vehicle)));
-        //wireMockServer.stop();
     }
 }

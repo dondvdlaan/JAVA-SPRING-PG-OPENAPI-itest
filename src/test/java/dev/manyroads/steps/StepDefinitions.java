@@ -7,8 +7,8 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import wiremock.net.minidev.json.JSONObject;
 
-import net.minidev.json.JSONObject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
