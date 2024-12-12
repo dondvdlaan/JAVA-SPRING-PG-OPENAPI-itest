@@ -1,7 +1,5 @@
 package dev.manyroads.steps;
 
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import com.github.tomakehurst.wiremock.WireMockServer;
