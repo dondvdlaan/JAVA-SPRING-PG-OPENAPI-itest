@@ -7,6 +7,7 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lombok.extern.slf4j.Slf4j;
 import wiremock.net.minidev.json.JSONObject;
 
 
@@ -16,24 +17,25 @@ public class StepDefinitions {
 
     Response response;
 
-    @When("Start Decom with matter request")
-    public void startDCMWithMatterRequest() {
+    @When("Start Decom with matter request {int} {string}")
+    public void startDCMWithMatterRequest(int customerNr,String matterNr) {
 
         RestAssured.baseURI = "http://localhost:8080/v1";
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("customerNr", 121212);
-        jsonObject.put("matterNr", "9781449325862");
+        jsonObject.put("customerNr", customerNr);
+        System.out.println("matterNr: "+ matterNr);
+        jsonObject.put("matterNr", matterNr);
         request.body(jsonObject.toJSONString());
 
         // Activate
         response = request.post("/matters");
     }
 
-    @Then("Bericht terugontvangen")
-    public void theScenarioPasses() {
-        assertEquals("121212",getJsonPath(response,"customerNr"));
+    @Then("Decom returns {int}")
+    public void theScenarioPasses(int customerNr ) {
+        assertEquals(Integer.toString(customerNr),getJsonPath(response,"customerNr"));
     }
 
     static String getJsonPath(Response response, String key) {
@@ -41,4 +43,6 @@ public class StepDefinitions {
         JsonPath js = new JsonPath(complete);
         return js.get(key).toString();
     }
+
+
 }
