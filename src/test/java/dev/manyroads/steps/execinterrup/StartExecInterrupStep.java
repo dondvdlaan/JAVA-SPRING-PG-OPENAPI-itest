@@ -1,46 +1,49 @@
-package dev.manyroads.steps;
+package dev.manyroads.steps.execinterrup;
 
+import dev.manyroads.model.dtos.ExecInterrupRequestDTO;
+import dev.manyroads.model.enums.ExecInterrupEnum;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
 import wiremock.net.minidev.json.JSONObject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StepDefinitions {
+public class StartExecInterrupStep {
 
     Response response;
 
-    @When("Start Decom with matter request {int} {string}")
-    public void startDCMWithMatterRequest(int customerNr, String matterNr) {
+    @When("Start exec interrup with request {int} {string}")
+    public void startExecInterrupWithExecInterrupRequest(long customerNr, String execInterrupEnum) {
 
         RestAssured.baseURI = "http://localhost:8080/v1";
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
+        ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr,execInterrupEnum,null);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerNr", customerNr);
-        jsonObject.put("matterNr", matterNr);
-        request.body(jsonObject.toJSONString());
+        jsonObject.put("CUSTOMER_DECEASED", execInterrupEnum);
+        jsonObject.put("matterNr", null);
+       // request.body(jsonObject.toJSONString());
+        request.body(execInterrupRequestDTO);
 
         // Activate
-        response = request.post("/matters");
+        response = request.post("/execinterrup");
     }
 
-    @Then("Decom returns {int}")
+    @Then("Exec Interrup returns {int}")
     public void theScenarioPasses(int customerNr) {
         assertEquals(Integer.toString(customerNr), getJsonPath(response, "customerNr"));
     }
 
-    // sub methods
     static String getJsonPath(Response response, String key) {
         String complete = response.asString();
         JsonPath js = new JsonPath(complete);
         return js.get(key).toString();
     }
+
 
 }

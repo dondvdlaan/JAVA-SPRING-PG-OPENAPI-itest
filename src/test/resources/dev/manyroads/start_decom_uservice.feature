@@ -1,14 +1,14 @@
 Feature: Start decom uservice
 
   Background:
-    Given starting up wiremockserver
+    Given starting up wiremockserver Decom
 
   Scenario Outline: Start Decom by sending a matter request
     Given admin client source delivers "<vehicle>"
-    And customer process client accepts charge
+    And Decom customer process client accepts charge
     When Start Decom with matter request <customerNr> "<matterNr>"
     Then Decom returns <customerNr>
-    Then stopping wiremockserver
+    Then stopping wiremockserver Decom
 
     Examples:
       | vehicle   | customerNr | matterNr |
