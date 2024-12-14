@@ -1,4 +1,4 @@
-package dev.manyroads.model;
+package dev.manyroads.model.enums;
 
 public enum VehicleEnum {
     bulldozer,

@@ -1,8 +1,8 @@
-package dev.manyroads.steps;
+package dev.manyroads.steps.execinterrup;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import com.github.tomakehurst.wiremock.WireMockServer;
 import io.cucumber.java.en.Then;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -16,14 +16,14 @@ public class WireMockSteps {
 
     static WireMockServer wireMockServer;
 
-    @Given("starting up wiremockserver")
+    @Given("starting up wiremockserver exec interrup")
     public void startUp() {
         int port = 7090;
         wireMockServer = new WireMockServer(options().port(port));
         wireMockServer.start();
     }
 
-    @Given("admin client source delivers {string}")
+    @Given("admin client returns {string}")
     public void adminClientDeliversFollowingVehicle(String vehicle) {
 
         wireMockServer.stubFor(get(urlMatching("/vehicles/([0-9]*)"))

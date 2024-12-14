@@ -1,4 +1,4 @@
-package dev.manyroads.steps;
+package dev.manyroads.steps.decom;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,7 +12,7 @@ import wiremock.net.minidev.json.JSONObject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StepDefinitions {
+public class StartDecomStep {
 
     Response response;
 
