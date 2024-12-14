@@ -16,25 +16,25 @@ public class StartExecInterrupStep {
 
     Response response;
 
-    @When("admin client returns {string}")
-    public void startExecInterrupWithExecInterrupRequest(long customerNr, ExecInterrupEnum execInterrupEnum, String matterNr) {
+    @When("Start exec interrup with request {int} {string}")
+    public void startExecInterrupWithExecInterrupRequest(long customerNr, String execInterrupEnum) {
 
         RestAssured.baseURI = "http://localhost:8080/v1";
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
-        ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr, execInterrupEnum, matterNr);
+        ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr,execInterrupEnum,null);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerNr", customerNr);
-        System.out.println("matterNr: " + matterNr);
-        jsonObject.put("matterNr", matterNr);
-        //request.body(jsonObject.toJSONString());
+        jsonObject.put("CUSTOMER_DECEASED", execInterrupEnum);
+        jsonObject.put("matterNr", null);
+       // request.body(jsonObject.toJSONString());
         request.body(execInterrupRequestDTO);
 
         // Activate
         response = request.post("/execinterrup");
     }
 
-    @Then("Decom returns {int}")
+    @Then("Exec Interrup returns {int}")
     public void theScenarioPasses(int customerNr) {
         assertEquals(Integer.toString(customerNr), getJsonPath(response, "customerNr"));
     }

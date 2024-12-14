@@ -12,11 +12,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
-public class WireMockSteps {
+public class ExecInterrupWireMockSteps {
 
     static WireMockServer wireMockServer;
 
-    @Given("starting up wiremockserver exec interrup")
+    @Given("starting up wiremockserver Exec Interrup")
     public void startUp() {
         int port = 7090;
         wireMockServer = new WireMockServer(options().port(port));
@@ -24,12 +24,12 @@ public class WireMockSteps {
     }
 
     @Given("admin client returns {string}")
-    public void adminClientDeliversFollowingVehicle(String vehicle) {
+    public void adminClientTerminatesMatter(String returnMessage) {
 
-        wireMockServer.stubFor(get(urlMatching("/vehicles/([0-9]*)"))
+        wireMockServer.stubFor(get(urlEqualTo("/terminate-matter"))
                 .willReturn(aResponse().withHeader("Content-Type", "application/json")
                         .withStatus(200)
-                        .withBody(vehicle)));
+                        .withBody(returnMessage)));
     }
 
     @And("customer process client accepts charge")
@@ -40,7 +40,7 @@ public class WireMockSteps {
     }
 
 
-    @Then("stopping wiremockserver")
+    @Then("stopping wiremockserver Exec Interrup")
     public void stoppingWiremockserver() {
         wireMockServer.stop();
     }
