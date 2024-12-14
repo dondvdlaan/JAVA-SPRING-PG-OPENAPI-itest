@@ -1,41 +1,42 @@
-package dev.manyroads.steps;
+package dev.manyroads.steps.execinterrup;
 
+import dev.manyroads.model.dtos.ExecInterrupRequestDTO;
+import dev.manyroads.model.enums.ExecInterrupEnum;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import lombok.extern.slf4j.Slf4j;
 import wiremock.net.minidev.json.JSONObject;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StepDefinitions {
+public class StartExecInterrupStep {
 
     Response response;
 
-    @When("Start Decom with matter request {int} {string}")
-    public void startDCMWithMatterRequest(int customerNr,String matterNr) {
+    @When("admin client returns {string}")
+    public void startExecInterrupWithExecInterrupRequest(long customerNr, ExecInterrupEnum execInterrupEnum, String matterNr) {
 
         RestAssured.baseURI = "http://localhost:8080/v1";
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
+        ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr, execInterrupEnum, matterNr);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerNr", customerNr);
-        System.out.println("matterNr: "+ matterNr);
+        System.out.println("matterNr: " + matterNr);
         jsonObject.put("matterNr", matterNr);
-        request.body(jsonObject.toJSONString());
+        //request.body(jsonObject.toJSONString());
+        request.body(execInterrupRequestDTO);
 
         // Activate
-        response = request.post("/matters");
+        response = request.post("/execinterrup");
     }
 
     @Then("Decom returns {int}")
-    public void theScenarioPasses(int customerNr ) {
-        assertEquals(Integer.toString(customerNr),getJsonPath(response,"customerNr"));
+    public void theScenarioPasses(int customerNr) {
+        assertEquals(Integer.toString(customerNr), getJsonPath(response, "customerNr"));
     }
 
     static String getJsonPath(Response response, String key) {
