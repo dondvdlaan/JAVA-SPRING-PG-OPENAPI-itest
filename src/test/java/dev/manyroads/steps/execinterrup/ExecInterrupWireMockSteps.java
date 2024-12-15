@@ -26,19 +26,11 @@ public class ExecInterrupWireMockSteps {
     @Given("admin client returns {string}")
     public void adminClientTerminatesMatter(String returnMessage) {
 
-        wireMockServer.stubFor(get(urlEqualTo("/terminate-matter"))
+        wireMockServer.stubFor(post(urlEqualTo("/terminate-matter"))
                 .willReturn(aResponse().withHeader("Content-Type", "application/json")
                         .withStatus(200)
                         .withBody(returnMessage)));
     }
-
-    @And("customer process client accepts charge")
-    public void customerProcessClientAcceptsCharge() {
-        wireMockServer.stubFor(post(urlEqualTo("/v1/process_charge"))
-                .willReturn(aResponse().withHeader("Content-Type", "application/json")
-                        .withStatus(200)));
-    }
-
 
     @Then("stopping wiremockserver Exec Interrup")
     public void stoppingWiremockserver() {
