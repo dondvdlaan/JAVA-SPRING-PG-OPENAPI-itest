@@ -22,13 +22,15 @@ public class StartExecInterrupStep {
         RestAssured.baseURI = "http://localhost:8080/v1";
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
+        // Here you can either send a DTO class or a JSONObject
         ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr,execInterrupEnum,null);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerNr", customerNr);
-        jsonObject.put("CUSTOMER_DECEASED", execInterrupEnum);
+        jsonObject.put("execInterrupType", execInterrupEnum);
         jsonObject.put("matterNr", null);
-       // request.body(jsonObject.toJSONString());
-        request.body(execInterrupRequestDTO);
+        System.out.println("jsonObject.toJSONString() " + jsonObject.toJSONString());
+       request.body(jsonObject.toJSONString());
+        //request.body(execInterrupRequestDTO);
 
         // Activate
         response = request.post("/execinterrup");
