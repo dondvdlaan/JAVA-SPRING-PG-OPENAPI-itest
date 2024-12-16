@@ -1,2 +1,15 @@
-spring:
+server:
+  port: 8081
 
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/itestdb
+    username: itest
+    password: itest
+    # to configure db from schema.sql in resources
+    initialization-mode: always
+    schema: schema

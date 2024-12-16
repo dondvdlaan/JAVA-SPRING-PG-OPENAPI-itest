@@ -11,6 +11,6 @@ import static io.cucumber.core.options.Constants.GLUE_PROPERTY_NAME;
 @Suite
 @IncludeEngines("cucumber")
 @SelectPackages("dev.manyroads")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = " dev.manyroads.steps")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = " dev.manyroads")
 public class RunCucumberTest {
 }

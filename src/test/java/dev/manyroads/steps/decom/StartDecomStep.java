@@ -1,5 +1,7 @@
 package dev.manyroads.steps.decom;
 
+import dev.manyroads.entities.MatterResponseTestEntity;
+import dev.manyroads.entities.MatterResponseTestRepo;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -8,12 +10,19 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import wiremock.net.minidev.json.JSONObject;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//@Service
 public class StartDecomStep {
 
+    @Autowired
+    MatterResponseTestRepo matterResponseTestRepo;
     Response response;
 
     @When("Start Decom with matter request {int} {string}")
@@ -32,8 +41,18 @@ public class StartDecomStep {
     }
 
     @Then("Decom returns {int}")
-    public void theScenarioPasses(int customerNr) {
+    public void decomReturnCustomerNr(int customerNr) {
+        System.out.println("decomReturnCustomerNr");
         assertEquals(Integer.toString(customerNr), getJsonPath(response, "customerNr"));
+
+        System.out.println("decomReturnCustomerNr: saving matterResponseTestEntity ");
+        MatterResponseTestEntity matterResponseTestEntity = MatterResponseTestEntity.builder()
+                .customerNr(Long.parseLong(getJsonPath(response, "customerNr")))
+                .chargeID(UUID.fromString(getJsonPath(response, "chargeID")))
+                .build();
+        var saved = matterResponseTestRepo.save(matterResponseTestEntity);
+        System.out.println("decomReturnCustomerNr saved :" + saved);
+
     }
 
     // sub methods
