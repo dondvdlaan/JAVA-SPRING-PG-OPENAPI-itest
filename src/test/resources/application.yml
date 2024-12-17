@@ -1,15 +1,17 @@
 server:
   port: 8081
 
+# to configure db from schema.sql in resources
+spring.sql.init.mode: always
 
 spring:
   jpa:
     hibernate:
+      # create-drop will drop db each time java exits
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/itestdb
     username: itest
     password: itest
-    # to configure db from schema.sql in resources
-    initialization-mode: always
-    schema: schema
+    schemas: schema
+

@@ -11,6 +11,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan({"dev.manyroads.entities"})
 @ComponentScan(basePackages = "dev.manyroads")
 @EnableAutoConfiguration
-public class TestConfig {
-    // We can leave it empty unless otherwise needed
-}
+public class SpringTestConfig {}

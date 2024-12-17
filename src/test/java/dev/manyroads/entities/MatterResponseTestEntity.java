@@ -1,5 +1,6 @@
 package dev.manyroads.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +29,9 @@ public class MatterResponseTestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    @Column(name = "customer_nr")
     Long customerNr;
+    @Column(name = "charge_id")
     UUID chargeID;
 
 }
