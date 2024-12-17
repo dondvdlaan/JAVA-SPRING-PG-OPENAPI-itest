@@ -2,7 +2,6 @@ package dev.manyroads.steps.intermediatereportstatus.execinterrup;
 
 import dev.manyroads.entities.MatterResponseTestEntity;
 import dev.manyroads.entities.MatterResponseTestRepo;
-import dev.manyroads.model.dtos.ExecInterrupRequestDTO;
 import dev.manyroads.model.dtos.IntermediateReportMatterRequestDTO;
 import dev.manyroads.model.dtos.IntermediateReportStatusRequestDTO;
 import io.cucumber.java.en.Given;
