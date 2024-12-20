@@ -11,7 +11,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import wiremock.net.minidev.json.JSONObject;
 
 import java.util.UUID;

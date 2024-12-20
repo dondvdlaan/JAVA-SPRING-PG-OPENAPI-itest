@@ -1,9 +1,6 @@
 package dev.manyroads.steps.execinterrup;
 
-import dev.manyroads.entities.MatterResponseTestRepo;
 import dev.manyroads.model.dtos.ExecInterrupRequestDTO;
-import dev.manyroads.model.enums.ExecInterrupEnum;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
