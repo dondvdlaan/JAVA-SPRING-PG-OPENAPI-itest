@@ -8,10 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -33,5 +31,7 @@ public class MatterResponseTestEntity {
     Long customerNr;
     @Column(name = "charge_id")
     UUID chargeID;
+    @Column(name = "termination_call_back_url")
+    String terminationCallBackUrl;
 
 }

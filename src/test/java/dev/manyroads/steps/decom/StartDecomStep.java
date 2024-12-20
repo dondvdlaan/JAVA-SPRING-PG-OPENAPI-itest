@@ -11,7 +11,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import wiremock.net.minidev.json.JSONObject;
 
 import java.util.UUID;
@@ -24,16 +23,22 @@ public class StartDecomStep {
     @Autowired
     MatterResponseTestRepo matterResponseTestRepo;
     Response response;
+    String terminationCallBackUrl;
 
-    @When("Start Decom with matter request {int} {string}")
-    public void startDCMWithMatterRequest(int customerNr, String matterNr) {
+    @When("Start Decom with matter request {int} {string} {string}")
+    public void startDCMWithMatterRequest(int customerNr, String matterNr, String terminationCallBackUrl) {
 
+        this.terminationCallBackUrl = terminationCallBackUrl;
         RestAssured.baseURI = "http://localhost:8080/v1";
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
+        JSONObject jsonMatterRequestCallback = new JSONObject();
+        jsonMatterRequestCallback.put("intermediateReportUrl","xxx/yyy");
+        jsonMatterRequestCallback.put("terminationCallBackUrl",terminationCallBackUrl);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerNr", customerNr);
         jsonObject.put("matterNr", matterNr);
+        jsonObject.put("callback", jsonMatterRequestCallback);
         request.body(jsonObject.toJSONString());
 
         // Activate
@@ -49,6 +54,7 @@ public class StartDecomStep {
         MatterResponseTestEntity matterResponseTestEntity = MatterResponseTestEntity.builder()
                 .customerNr(Long.parseLong(getJsonPath(response, "customerNr")))
                 .chargeID(UUID.fromString(getJsonPath(response, "chargeID")))
+                .terminationCallBackUrl(this.terminationCallBackUrl)
                 .build();
         var saved = matterResponseTestRepo.save(matterResponseTestEntity);
         System.out.println("decomReturnCustomerNr saved :" + saved);

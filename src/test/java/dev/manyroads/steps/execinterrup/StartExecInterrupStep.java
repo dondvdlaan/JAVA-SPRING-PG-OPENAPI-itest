@@ -1,7 +1,6 @@
 package dev.manyroads.steps.execinterrup;
 
 import dev.manyroads.model.dtos.ExecInterrupRequestDTO;
-import dev.manyroads.model.enums.ExecInterrupEnum;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
@@ -16,6 +15,7 @@ public class StartExecInterrupStep {
 
     Response response;
 
+
     @When("Start exec interrup with request {int} {string}")
     public void startExecInterrupWithExecInterrupRequest(long customerNr, String execInterrupEnum) {
 
@@ -23,13 +23,13 @@ public class StartExecInterrupStep {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
         // Here you can either send a DTO class or a JSONObject
-        ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr,execInterrupEnum,null);
+        ExecInterrupRequestDTO execInterrupRequestDTO = new ExecInterrupRequestDTO(customerNr, execInterrupEnum, null);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerNr", customerNr);
         jsonObject.put("execInterrupType", execInterrupEnum);
         jsonObject.put("matterNr", null);
         System.out.println("jsonObject.toJSONString() " + jsonObject.toJSONString());
-       request.body(jsonObject.toJSONString());
+        request.body(jsonObject.toJSONString());
         //request.body(execInterrupRequestDTO);
 
         // Activate
