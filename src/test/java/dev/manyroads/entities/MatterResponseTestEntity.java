@@ -33,5 +33,7 @@ public class MatterResponseTestEntity {
     Long customerNr;
     @Column(name = "charge_id")
     UUID chargeID;
+    @Column(name = "termination_call_back_url")
+    String terminationCallBackUrl;
 
 }
