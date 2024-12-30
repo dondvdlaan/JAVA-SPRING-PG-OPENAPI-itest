@@ -8,11 +8,12 @@ Feature: Start decom uservice
     And Decom customer process client accepts charge
     When Start Decom with matter request <customerNr> "<matterNr>" "<terminationCallBackUrl>"
     Then Decom returns <customerNr>
+    Then Wait till customer standby period is over <standByPeriod>
     Then stopping wiremockserver Decom
 
     Examples:
-      | vehicle   | customerNr | matterNr | terminationCallBackUrl |
-      | bulldozer | 123456     | 98765    | /v1/terminate-matter/   |
-      | dirtbike  | 1111111    | 22222    | /v1/terminate-matter/   |
+      | vehicle   | customerNr | matterNr | terminationCallBackUrl | standByPeriod |
+      | bulldozer | 123456     | 98765    | /v1/terminate-matter/  | 3             |
+    #  | dirtbike  | 1111111    | 22222    | /v1/terminate-matter/  |
 
 

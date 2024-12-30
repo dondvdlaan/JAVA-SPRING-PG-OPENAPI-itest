@@ -45,6 +45,12 @@ public class StartDecomStep {
         response = request.post("/matters");
     }
 
+    @Then("Wait till customer standby period is over {int}")
+    public void waitTillCustomerStandbyPeriodIsOver(int standByPeriod) throws InterruptedException {
+        Thread.sleep(3000);
+        // TODO: make steps independent of Wiremock
+    }
+
     @Then("Decom returns {int}")
     public void decomReturnCustomerNr(int customerNr) {
         System.out.println("decomReturnCustomerNr");
@@ -58,7 +64,6 @@ public class StartDecomStep {
                 .build();
         var saved = matterResponseTestRepo.save(matterResponseTestEntity);
         System.out.println("decomReturnCustomerNr saved :" + saved);
-
     }
 
     // sub methods
@@ -67,5 +72,6 @@ public class StartDecomStep {
         JsonPath js = new JsonPath(complete);
         return js.get(key).toString();
     }
+
 
 }
