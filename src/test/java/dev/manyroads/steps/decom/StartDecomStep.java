@@ -13,10 +13,7 @@ import io.restassured.specification.RequestSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import wiremock.net.minidev.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.UUID;
-import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
