@@ -30,7 +30,7 @@ public class StartDecomStep {
 
         this.terminationCallBackUrl = terminationCallBackUrl;
         RestAssured.baseURI = "http://localhost:8080/v1";
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given().auth().basic("decom", "secret");
         request.header("Content-Type", "application/json");
         JSONObject jsonMatterRequestCallback = new JSONObject();
         jsonMatterRequestCallback.put("intermediateReportUrl","xxx/yyy");

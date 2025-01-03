@@ -14,6 +14,6 @@ Feature: Start decom uservice
     Examples:
       | vehicle   | customerNr | matterNr | terminationCallBackUrl | standByPeriod |
       | bulldozer | 123456     | 98765    | /v1/terminate-matter/  | 3             |
-    #  | dirtbike  | 1111111    | 22222    | /v1/terminate-matter/  |
+      | dirtbike  | 1111111    | 22222    | /v1/terminate-matter/  | 3             |
 
 
