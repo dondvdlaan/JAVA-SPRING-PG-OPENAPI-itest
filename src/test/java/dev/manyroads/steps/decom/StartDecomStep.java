@@ -13,7 +13,10 @@ import io.restassured.specification.RequestSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import wiremock.net.minidev.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +33,7 @@ public class StartDecomStep {
 
         this.terminationCallBackUrl = terminationCallBackUrl;
         RestAssured.baseURI = "http://localhost:8080/v1";
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given().auth().basic("decom", "secret");
         request.header("Content-Type", "application/json");
         JSONObject jsonMatterRequestCallback = new JSONObject();
         jsonMatterRequestCallback.put("intermediateReportUrl","xxx/yyy");
